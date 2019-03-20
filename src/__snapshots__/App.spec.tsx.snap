@@ -1,0 +1,881 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App snapshot test 1`] = `
+<View
+  style={
+    Object {
+      "height": "100%",
+      "marginLeft": "10%",
+      "width": "90%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "lightgrey",
+        "height": "65%",
+        "marginTop": 100,
+        "width": "90%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 715,
+          "left": 0,
+          "top": 96.05000000000001,
+          "width": 675,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontSize": 24,
+            "fontWeight": "bold",
+            "marginBottom": 20,
+            "textAlign": "center",
+          }
+        }
+      >
+        00 : 00
+      </Text>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 580.625,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 347.5,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          3
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 546.7126803329361,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 474.06249999999994,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          4
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 454.0625,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 566.7126803329361,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          5
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 327.5,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 600.625,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          6
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 200.93750000000006,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 566.7126803329361,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          7
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 108.287319667064,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 474.06250000000006,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          8
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 74.375,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 347.50000000000006,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          9
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 108.28731966706391,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 220.93750000000006,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          10
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 200.9374999999999,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 128.287319667064,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          11
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 327.49999999999994,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 94.375,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          12
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 454.06249999999983,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 128.28731966706385,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          1
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 546.712680332936,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 220.9374999999999,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          2
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 496.25,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 347.5,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          15
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 473.64178688862404,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 431.87499999999994,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          16
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 411.875,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 493.64178688862404,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          17
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 327.5,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 516.25,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          18
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 243.12500000000006,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 493.64178688862404,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          19
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 181.35821311137602,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 431.87500000000006,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          20
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 158.75,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 347.5,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          21
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 181.35821311137596,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 263.12500000000006,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          22
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 243.12499999999994,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 201.35821311137602,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          23
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 327.49999999999994,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 178.75,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          00
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 411.8749999999999,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 201.3582131113759,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          13
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "height": 20,
+            "left": 473.641786888624,
+            "opacity": 1,
+            "position": "absolute",
+            "top": 263.12499999999994,
+            "width": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 14,
+              "fontWeight": "bold",
+              "textAlign": "center",
+            }
+          }
+        >
+          14
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "height": 20,
+            "marginLeft": "50%",
+            "marginTop": 590.625,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "flex": 1,
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontSize": 14,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Cancel
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "flex": 1,
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontSize": 14,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Ok
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

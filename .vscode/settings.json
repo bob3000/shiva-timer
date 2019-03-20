@@ -1,0 +1,6 @@
+{
+    "prettier.trailingComma": "all",
+    "prettier.arrowParens": "always",
+    "typescript.preferences.quoteStyle": "double",
+    "javascript.preferences.quoteStyle": "double"
+}
