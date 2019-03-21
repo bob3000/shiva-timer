@@ -111,8 +111,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
     });
     this.timer = setInterval(() => {
       this.setState({ now: new Date().getTime() });
-    }, 1000);
-  };
+    },                       1000);
+  }
 
   private reset = () => {
     this.setState({
@@ -120,7 +120,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       now: 0,
       start: 0,
     });
-  };
+  }
 
   private resume = () => {
     const now = new Date().getTime();
@@ -130,8 +130,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
     });
     this.timer = setInterval(() => {
       this.setState({ now: new Date().getTime() });
-    }, 1000);
-  };
+    },                       1000);
+  }
 
   private lap = () => {
     const timestamp = new Date().getTime();
@@ -142,7 +142,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       now: timestamp,
       start: timestamp,
     });
-  };
+  }
 
   private stop = () => {
     if (this.timer) clearInterval(this.timer);
@@ -153,7 +153,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       now: 0,
       start: 0,
     });
-  };
+  }
 }
 
 interface ITimerProps {

@@ -3,6 +3,7 @@
   "rules": {
     "no-any": true,
     "no-empty-interface": false,
+    "object-literal-sort-keys": [true, "shorthand-first"],
     "prefer-array-literal": [true, { "allow-type-parameters": true }],
     "variable-name": [
       true,
