@@ -2,6 +2,7 @@
   "extends": ["tslint:recommended", "tslint-config-airbnb"],
   "rules": {
     "no-any": true,
+    "no-empty-interface": false,
     "prefer-array-literal": [true, { "allow-type-parameters": true }],
     "variable-name": [
       true,
