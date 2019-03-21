@@ -161,7 +161,7 @@ interface ITimerProps {
   style?: TextStyle;
 }
 
-const Timer: React.FunctionComponent<ITimerProps> = (props) => {
+export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
   const duration = Moment.duration(props.interval);
   return (
     <View style={styles.timerContainer}>
@@ -185,7 +185,7 @@ const Timer: React.FunctionComponent<ITimerProps> = (props) => {
 interface IButtonRowProps {
   children: Element[];
 }
-const ButtonsRow: React.FunctionComponent<IButtonRowProps> = (props) => {
+export const ButtonsRow: React.FunctionComponent<IButtonRowProps> = (props) => {
   return <View style={styles.buttonsRow}>{props.children}</View>;
 };
 
@@ -197,7 +197,9 @@ interface IRoundButtonProps {
   title: string;
 }
 
-const RoundButton: React.FunctionComponent<IRoundButtonProps> = (props) => {
+export const RoundButton: React.FunctionComponent<IRoundButtonProps> = (
+  props,
+) => {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: props.background }]}
@@ -218,7 +220,7 @@ interface ILapsTableProps {
   timer: number;
 }
 
-const LapsTable: React.FunctionComponent<ILapsTableProps> = (props) => {
+export const LapsTable: React.FunctionComponent<ILapsTableProps> = (props) => {
   const finishedLaps = props.laps.slice(1);
   let slowestLap = Number.MAX_SAFE_INTEGER;
   let fastestLap = Number.MIN_SAFE_INTEGER;
@@ -252,7 +254,7 @@ interface ILapProps {
   slowest: boolean;
 }
 
-const Lap: React.FunctionComponent<ILapProps> = (props) => {
+export const Lap: React.FunctionComponent<ILapProps> = (props) => {
   const lapStyle = [
     styles.lapText,
     (props.fastest && styles.fastestLap) || undefined,
