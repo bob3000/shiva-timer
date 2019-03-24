@@ -1,6 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-config-airbnb"],
   "rules": {
+    "max-classes-per-file": false,
     "no-any": true,
     "no-empty-interface": false,
     "object-literal-sort-keys": [true, "shorthand-first"],
