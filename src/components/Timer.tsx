@@ -10,6 +10,15 @@ import {
   ViewStyle,
 } from 'react-native';
 
+export const secondsToMinutes = (secs: number) => {
+  const minutes = Math.trunc(secs / 60)
+    .toString()
+    .padStart(2, '0');
+  const seconds = (secs % 60).toString().padStart(2, '0');
+
+  return { minutes, seconds };
+};
+
 interface ITimerProps {
   changeHandler: (time: number) => void;
   displayTime: number;
@@ -18,10 +27,7 @@ interface ITimerProps {
 }
 
 export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
-  const minutes = Math.trunc(props.displayTime / 60)
-    .toString()
-    .padStart(2, '0');
-  const seconds = (props.displayTime % 60).toString().padStart(2, '0');
+  const { minutes, seconds } = secondsToMinutes(props.displayTime);
 
   const endEditing = () => {
     props.endEditingHandler();
@@ -79,12 +85,12 @@ const styles = StyleSheet.create<ITimerStyles>({
     flexDirection: 'row',
   },
   digitSpace: {
-    width: 90,
+    width: 86,
   },
   displayContainer: {
+    alignItems: 'center',
     backgroundColor: '#151515',
     height: 100,
-    width: 200,
   },
   displayText: {
     color: '#FFFFFF',

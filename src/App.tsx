@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { Button, TouchableOpacity, View } from 'react-native';
-import Timer from './components/Timer';
+import { Button, Slider, Text, TouchableOpacity, View } from 'react-native';
+import Timer, { secondsToMinutes } from './components/Timer';
 
 interface IAppProps {}
 
 interface IAppState {
   countdownTime: number;
+  isCountdownRunning: boolean;
   isEditing: boolean;
+  warmupTime: number;
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
@@ -17,7 +19,9 @@ export default class App extends React.Component<IAppProps, IAppState> {
     super(props);
     this.state = {
       countdownTime: 0,
+      isCountdownRunning: false,
       isEditing: false,
+      warmupTime: 0,
     };
   }
 
@@ -30,11 +34,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
       <View>
         <TouchableOpacity
           onPress={() => {
-            if (!this.state.isEditing) {
-              this.setState({ isEditing: !this.state.isEditing });
-            } else {
-              this.endTimerEdit();
-            }
+            if (this.state.isCountdownRunning) return;
+            !this.state.isEditing
+              ? this.setState({ isEditing: !this.state.isEditing })
+              : this.endTimerEdit();
           }}
         >
           <Timer
@@ -44,9 +47,28 @@ export default class App extends React.Component<IAppProps, IAppState> {
             isEditMode={this.state.isEditing}
           />
         </TouchableOpacity>
-        <Button title={'Start'} onPress={this.startCountdown} />
-        <Button title={'Pause'} onPress={this.pauseCountdown} />
-        <Button title={'Reset'} onPress={this.resetCountdown} />
+
+        <View>
+          <Slider
+            minimumValue={0}
+            maximumValue={600}
+            onValueChange={(value: number) =>
+              this.setState({ warmupTime: Math.trunc(value) })
+            }
+            step={10}
+            value={this.state.warmupTime}
+          />
+          <Text>{this.displayWarmupTime()}</Text>
+        </View>
+
+        <View>
+          {this.timer ? (
+            <Button title={'Pause'} onPress={this.pauseCountdown} />
+          ) : (
+            <Button title={'Start'} onPress={this.startCountdown} />
+          )}
+          <Button title={'Reset'} onPress={this.resetCountdown} />
+        </View>
       </View>
     );
   }
@@ -55,6 +77,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     if (this.timer) {
       clearInterval(this.timer);
       this.timer = undefined;
+      this.setState({ isCountdownRunning: false });
     }
   }
 
@@ -70,14 +93,22 @@ export default class App extends React.Component<IAppProps, IAppState> {
       if (this.state.countdownTime <= 1) {
         this.pauseCountdown();
       }
-      this.setState({ countdownTime: this.state.countdownTime - 1 });
+      this.setState({
+        countdownTime: this.state.countdownTime - 1,
+        isCountdownRunning: true,
+      });
     },                       1000);
   }
 
-  private setCountdownInput = (time: number) => {
+  public setCountdownInput = (time: number) => {
     this.countdownInput = time;
   }
 
-  private endTimerEdit = () =>
+  public endTimerEdit = () =>
     this.setState({ countdownTime: this.countdownInput, isEditing: false })
+
+  private displayWarmupTime = () => {
+    const { minutes, seconds } = secondsToMinutes(this.state.warmupTime);
+    return `${minutes}:${seconds}`;
+  }
 }
