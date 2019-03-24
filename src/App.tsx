@@ -8,11 +8,13 @@ interface IAppState {
   countdownTime: number;
   isCountdownRunning: boolean;
   isEditing: boolean;
+  isSettingWarmupTime: boolean;
   warmupTime: number;
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
   private countdownInput = 0;
+  private setWarmupTime = 0;
   private timer?: number;
 
   constructor(props: IAppProps) {
@@ -21,6 +23,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       countdownTime: 0,
       isCountdownRunning: false,
       isEditing: false,
+      isSettingWarmupTime: false,
       warmupTime: 0,
     };
   }
@@ -30,6 +33,13 @@ export default class App extends React.Component<IAppProps, IAppState> {
   }
 
   public render() {
+    let displayTime = 0;
+    if (this.state.isCountdownRunning && this.state.warmupTime > 0) {
+      displayTime = this.state.warmupTime;
+    } else {
+      displayTime = this.state.countdownTime;
+    }
+
     return (
       <View>
         <TouchableOpacity
@@ -43,7 +53,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
           <Timer
             changeHandler={this.setCountdownInput}
             endEditingHandler={this.endTimerEdit}
-            displayTime={this.state.countdownTime}
+            displayTime={displayTime}
             isEditMode={this.state.isEditing}
           />
         </TouchableOpacity>
@@ -52,8 +62,15 @@ export default class App extends React.Component<IAppProps, IAppState> {
           <Slider
             minimumValue={0}
             maximumValue={600}
+            onSlidingComplete={() => {
+              this.setWarmupTime = this.state.warmupTime;
+              this.setState({ isSettingWarmupTime: false });
+            }}
             onValueChange={(value: number) =>
-              this.setState({ warmupTime: Math.trunc(value) })
+              this.setState({
+                isSettingWarmupTime: true,
+                warmupTime: Math.trunc(value),
+              })
             }
             step={10}
             value={this.state.warmupTime}
@@ -65,7 +82,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
           {this.timer ? (
             <Button title={'Pause'} onPress={this.pauseCountdown} />
           ) : (
-            <Button title={'Start'} onPress={this.startCountdown} />
+            <Button title={'Start'} onPress={this.startWarmup} />
           )}
           <Button title={'Reset'} onPress={this.resetCountdown} />
         </View>
@@ -86,18 +103,48 @@ export default class App extends React.Component<IAppProps, IAppState> {
     this.setState({ countdownTime: 0 });
   }
 
+  public startWarmup = () => {
+    if (this.state.countdownTime <= 0 || this.timer) return;
+    if (this.state.warmupTime <= 0) {
+      if (this.timer) clearInterval(this.timer);
+      this.startCountdown();
+      return;
+    }
+
+    this.timer = setInterval(() => {
+      if (this.state.warmupTime <= 1) {
+        this.pauseCountdown();
+        this.warmupFinishedHandler();
+        this.startCountdown();
+      }
+      this.setState({
+        isCountdownRunning: true,
+        warmupTime: this.state.warmupTime - 1,
+      });
+    },                       1000);
+  }
+
   public startCountdown = () => {
-    if (this.state.countdownTime <= 0) return;
+    if (this.state.countdownTime <= 0 || this.timer) return;
 
     this.timer = setInterval(() => {
       if (this.state.countdownTime <= 1) {
         this.pauseCountdown();
+        this.countdownFinishedHandler();
       }
       this.setState({
         countdownTime: this.state.countdownTime - 1,
         isCountdownRunning: true,
       });
     },                       1000);
+  }
+
+  public countdownFinishedHandler = () => {
+    console.log('countdown finished');
+  }
+
+  public warmupFinishedHandler = () => {
+    console.log('warmup finished');
   }
 
   public setCountdownInput = (time: number) => {
@@ -108,7 +155,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
     this.setState({ countdownTime: this.countdownInput, isEditing: false })
 
   private displayWarmupTime = () => {
-    const { minutes, seconds } = secondsToMinutes(this.state.warmupTime);
+    const displayTime = this.state.isSettingWarmupTime
+      ? this.state.warmupTime
+      : this.setWarmupTime;
+    const { minutes, seconds } = secondsToMinutes(displayTime);
     return `${minutes}:${seconds}`;
   }
 }
