@@ -48,12 +48,12 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
           <TextInput
             autoFocus={true}
             keyboardType={'numeric'}
-            onBlur={(e: NativeSyntheticEvent<TextInputEndEditingEventData>) =>
+            onBlur={(_: NativeSyntheticEvent<TextInputEndEditingEventData>) =>
               endEditing()
             }
             onChangeText={(time: string) => changeText(time)}
             onEndEditing={(
-              e: NativeSyntheticEvent<TextInputEndEditingEventData>,
+              _: NativeSyntheticEvent<TextInputEndEditingEventData>,
             ) => endEditing()}
             style={[styles.displayText, styles.editSpace]}
             placeholder={minutes}

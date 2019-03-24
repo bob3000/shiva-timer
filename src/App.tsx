@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import Timer from './components/Timer';
 
 interface IAppProps {}
@@ -11,6 +11,7 @@ interface IAppState {
 
 export default class App extends React.Component<IAppProps, IAppState> {
   private countdownInput = 0;
+  private timer?: number;
 
   constructor(props: IAppProps) {
     super(props);
@@ -18,6 +19,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
       countdownTime: 0,
       isEditing: false,
     };
+  }
+
+  public componentWillUnmount() {
+    this.pauseCountdown();
   }
 
   public render() {
@@ -39,8 +44,34 @@ export default class App extends React.Component<IAppProps, IAppState> {
             isEditMode={this.state.isEditing}
           />
         </TouchableOpacity>
+        <Button title={'Start'} onPress={this.startCountdown} />
+        <Button title={'Pause'} onPress={this.pauseCountdown} />
+        <Button title={'Reset'} onPress={this.resetCountdown} />
       </View>
     );
+  }
+
+  public pauseCountdown = () => {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = undefined;
+    }
+  }
+
+  public resetCountdown = () => {
+    this.pauseCountdown();
+    this.setState({ countdownTime: 0 });
+  }
+
+  public startCountdown = () => {
+    if (this.state.countdownTime <= 0) return;
+
+    this.timer = setInterval(() => {
+      if (this.state.countdownTime <= 1) {
+        this.pauseCountdown();
+      }
+      this.setState({ countdownTime: this.state.countdownTime - 1 });
+    },                       1000);
   }
 
   private setCountdownInput = (time: number) => {
