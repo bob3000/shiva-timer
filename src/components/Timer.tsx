@@ -22,6 +22,7 @@ export const secondsToMinutes = (secs: number) => {
 interface ITimerProps {
   changeHandler: (time: number) => void;
   displayTime: number;
+  displayTimeStyle?: TextStyle;
   isEditMode: boolean;
   endEditingHandler: () => void;
 }
@@ -43,9 +44,25 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
     <View style={styles.displayContainer}>
       {!props.isEditMode && (
         <View style={styles.digitContainer}>
-          <Text style={[styles.displayText, styles.digitSpace]}>{minutes}</Text>
-          <Text style={styles.displayText}>:</Text>
-          <Text style={[styles.displayText, styles.digitSpace]}>{seconds}</Text>
+          <Text
+            style={[
+              styles.displayText,
+              styles.digitSpace,
+              props.displayTimeStyle,
+            ]}
+          >
+            {minutes}
+          </Text>
+          <Text style={[styles.displayText, props.displayTimeStyle]}>:</Text>
+          <Text
+            style={[
+              styles.displayText,
+              styles.digitSpace,
+              props.displayTimeStyle,
+            ]}
+          >
+            {seconds}
+          </Text>
         </View>
       )}
 

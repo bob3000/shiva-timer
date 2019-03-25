@@ -1,7 +1,18 @@
 import { Audio } from 'expo';
 import * as React from 'react';
-import { Button, Slider, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Button,
+  Slider,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Timer, { secondsToMinutes } from './components/Timer';
+
+const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
 
 interface IAppProps {}
 
@@ -55,14 +66,24 @@ export default class App extends React.Component<IAppProps, IAppState> {
             changeHandler={this.setCountdownInput}
             endEditingHandler={this.endTimerEdit}
             displayTime={displayTime}
+            displayTimeStyle={
+              this.state.warmupTime > 0 && this.state.isCountdownRunning
+                ? styles.timerDisplayTime
+                : undefined
+            }
             isEditMode={this.state.isEditing}
           />
         </TouchableOpacity>
 
         <View>
           <Slider
+            disabled={
+              this.state.isCountdownRunning ||
+              (this.state.warmupTime < this.setWarmupTime &&
+                !this.state.isSettingWarmupTime)
+            }
             minimumValue={0}
-            maximumValue={600}
+            maximumValue={6}
             onSlidingComplete={() => {
               this.setWarmupTime = this.state.warmupTime;
               this.setState({ isSettingWarmupTime: false });
@@ -70,11 +91,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
             onValueChange={(value: number) =>
               this.setState({
                 isSettingWarmupTime: true,
-                warmupTime: Math.trunc(value),
+                warmupTime: warmupIntervals[Math.trunc(value)],
               })
             }
-            step={10}
-            value={this.state.warmupTime}
+            value={warmupIntervals.indexOf(this.setWarmupTime)}
           />
           <Text>{this.displayWarmupTime()}</Text>
         </View>
@@ -101,7 +121,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public resetCountdown = () => {
     this.pauseCountdown();
-    this.setState({ countdownTime: 0 });
+    this.setState({ countdownTime: 0, warmupTime: this.setWarmupTime });
   }
 
   public startWarmup = () => {
@@ -173,3 +193,13 @@ export default class App extends React.Component<IAppProps, IAppState> {
     return `${minutes}:${seconds}`;
   }
 }
+
+interface IAppStyle {
+  timerDisplayTime: TextStyle;
+}
+
+const styles = StyleSheet.create<IAppStyle>({
+  timerDisplayTime: {
+    color: '#D4D422',
+  },
+});
