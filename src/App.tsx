@@ -1,3 +1,4 @@
+import { Audio } from 'expo';
 import * as React from 'react';
 import { Button, Slider, Text, TouchableOpacity, View } from 'react-native';
 import Timer, { secondsToMinutes } from './components/Timer';
@@ -139,20 +140,30 @@ export default class App extends React.Component<IAppProps, IAppState> {
     },                       1000);
   }
 
-  public countdownFinishedHandler = () => {
-    console.log('countdown finished');
-  }
-
-  public warmupFinishedHandler = () => {
-    console.log('warmup finished');
-  }
-
   public setCountdownInput = (time: number) => {
     this.countdownInput = time;
   }
 
   public endTimerEdit = () =>
     this.setState({ countdownTime: this.countdownInput, isEditing: false })
+
+  private countdownFinishedHandler = () => {
+    this.playBellSound();
+  }
+
+  private warmupFinishedHandler = () => {
+    this.playBellSound();
+  }
+
+  private async playBellSound() {
+    const soundObject = new Audio.Sound();
+    try {
+      await soundObject.loadAsync(require('../assets/sounds/signal_tone.mp3'));
+      await soundObject.playAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   private displayWarmupTime = () => {
     const displayTime = this.state.isSettingWarmupTime
