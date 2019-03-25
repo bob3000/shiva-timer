@@ -8,7 +8,6 @@ import {
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
 import Timer, { secondsToMinutes } from './components/Timer';
 
@@ -21,6 +20,7 @@ interface IAppState {
   isCountdownRunning: boolean;
   isEditing: boolean;
   isSettingWarmupTime: boolean;
+  isWarmupRunning: boolean;
   warmupTime: number;
 }
 
@@ -36,6 +36,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       isCountdownRunning: false,
       isEditing: false,
       isSettingWarmupTime: false,
+      isWarmupRunning: false,
       warmupTime: 0,
     };
   }
@@ -46,7 +47,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public render() {
     let displayTime = 0;
-    if (this.state.isCountdownRunning && this.state.warmupTime > 0) {
+    if (this.isWarmupRunning()) {
       displayTime = this.state.warmupTime;
     } else {
       displayTime = this.state.countdownTime;
@@ -67,9 +68,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
             endEditingHandler={this.endTimerEdit}
             displayTime={displayTime}
             displayTimeStyle={
-              this.state.warmupTime > 0 && this.state.isCountdownRunning
-                ? styles.timerDisplayTime
-                : undefined
+              this.isWarmupRunning() ? styles.timerDisplayTime : undefined
             }
             isEditMode={this.state.isEditing}
           />
@@ -77,11 +76,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
         <View>
           <Slider
-            disabled={
-              this.state.isCountdownRunning ||
-              (this.state.warmupTime < this.setWarmupTime &&
-                !this.state.isSettingWarmupTime)
-            }
+            disabled={this.state.isCountdownRunning || this.isWarmupRunning()}
             minimumValue={0}
             maximumValue={6}
             onSlidingComplete={() => {
@@ -133,10 +128,11 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     this.timer = setInterval(() => {
-      if (this.state.warmupTime <= 1) {
+      if (this.state.warmupTime <= 0) {
         this.pauseCountdown();
         this.warmupFinishedHandler();
         this.startCountdown();
+        return;
       }
       this.setState({
         isCountdownRunning: true,
@@ -149,9 +145,14 @@ export default class App extends React.Component<IAppProps, IAppState> {
     if (this.state.countdownTime <= 0 || this.timer) return;
 
     this.timer = setInterval(() => {
-      if (this.state.countdownTime <= 1) {
+      if (this.state.countdownTime <= 0) {
         this.pauseCountdown();
         this.countdownFinishedHandler();
+        this.setState({
+          countdownTime: this.countdownInput,
+          warmupTime: this.setWarmupTime,
+        });
+        return;
       }
       this.setState({
         countdownTime: this.state.countdownTime - 1,
@@ -166,6 +167,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public endTimerEdit = () =>
     this.setState({ countdownTime: this.countdownInput, isEditing: false })
+
+  private isWarmupRunning = () => {
+    return Boolean(
+      this.state.warmupTime > 0 && this.state.warmupTime < this.setWarmupTime,
+    );
+  }
 
   private countdownFinishedHandler = () => {
     this.playBellSound();
