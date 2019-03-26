@@ -17,13 +17,16 @@ export const TimeSlider: React.FunctionComponent<ITimeSliderProps> = (
     <View style={styles.sliderContainer}>
       <Slider
         disabled={props.disabled}
-        minimumValue={0}
+        maximumTrackTintColor={'#000000'}
         maximumValue={props.intervals.length - 1}
+        minimumTrackTintColor={'#000000'}
+        minimumValue={0}
         onSlidingComplete={props.onSlidingComplete}
         onValueChange={(value: number) => {
           props.onValueChange(props.intervals[Math.trunc(value)]);
         }}
         style={styles.slider}
+        thumbTintColor={'#000000'}
         value={props.intervals.indexOf(props.value)}
       />
       <Timer
@@ -45,14 +48,14 @@ export interface ITimeSliderStyle {
 const styles = StyleSheet.create<ITimeSliderStyle>({
   scaleText: {
     fontSize: 18,
+    fontWeight: 'bold',
   },
   slider: {
     width: 200,
   },
   sliderContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
+    padding: 15,
   },
 });
 

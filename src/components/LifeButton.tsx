@@ -26,15 +26,17 @@ export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
   const styles = StyleSheet.create<ILifeButtonStyle>({
     mainContainer: {
       alignItems: 'center',
-      backgroundColor: '#000000',
+      backgroundColor: '#FFFFFF',
       borderRadius: 100,
       height: props.size,
       justifyContent: 'center',
+      opacity: 0.8,
       width: props.size,
     },
     titleText: {
-      color: '#FFFFFF',
+      color: '#000000',
       fontSize: props.textSize,
+      fontWeight: 'bold',
     },
   });
 

@@ -1,6 +1,7 @@
 import { Audio } from 'expo';
 import * as React from 'react';
 import {
+  ImageBackground,
   StyleSheet,
   Text,
   TextStyle,
@@ -58,86 +59,91 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <View style={styles.mainContainer}>
-        <View style={styles.timerContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              if (this.state.isCountdownRunning) return;
-              !this.state.isEditing
-                ? this.setState({ isEditing: !this.state.isEditing })
-                : this.endTimerEdit();
-            }}
-          >
-            <Timer
-              changeHandler={this.setCountdownInput}
-              endEditingHandler={this.endTimerEdit}
-              digitSpace={86}
-              displayTime={displayTime}
-              displayTimeStyle={
-                this.isWarmupRunning() ? styles.timerWarmupText : undefined
+      <ImageBackground
+        style={[{ height: '100%', width: '100%' }]}
+        source={require('../assets/backgrounds/lord_shiva.jpg')}
+      >
+        <View style={styles.mainContainer}>
+          <View style={styles.timerContainer}>
+            <TouchableOpacity
+              onPress={() => {
+                if (this.state.isCountdownRunning) return;
+                !this.state.isEditing
+                  ? this.setState({ isEditing: !this.state.isEditing })
+                  : this.endTimerEdit();
+              }}
+            >
+              <Timer
+                changeHandler={this.setCountdownInput}
+                endEditingHandler={this.endTimerEdit}
+                digitSpace={86}
+                displayTime={displayTime}
+                displayTimeStyle={
+                  this.isWarmupRunning() ? styles.timerWarmupText : undefined
+                }
+                isEditMode={this.state.isEditing}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.sliderContainer}>
+            <Text style={styles.sliderContainerTitle}>Warmup Time</Text>
+            <TimeSlider
+              disabled={this.isCountdownInProgress() || this.isWarmupRunning()}
+              intervals={warmupIntervals}
+              onSlidingComplete={() =>
+                this.setState({
+                  isSettingWarmupTime: false,
+                  warmupTime: this.state.warmupCounter,
+                })
               }
-              isEditMode={this.state.isEditing}
+              onValueChange={(value: number) =>
+                this.setState({
+                  isSettingWarmupTime: true,
+                  warmupCounter: value,
+                })
+              }
+              value={
+                (this.state.isSettingWarmupTime && this.state.warmupCounter) ||
+                this.state.warmupTime
+              }
             />
-          </TouchableOpacity>
-        </View>
+          </View>
 
-        <View style={styles.sliderContainer}>
-          <Text>Warmup Time</Text>
-          <TimeSlider
-            disabled={this.isCountdownInProgress() || this.isWarmupRunning()}
-            intervals={warmupIntervals}
-            onSlidingComplete={() =>
-              this.setState({
-                isSettingWarmupTime: false,
-                warmupTime: this.state.warmupCounter,
-              })
-            }
-            onValueChange={(value: number) =>
-              this.setState({
-                isSettingWarmupTime: true,
-                warmupCounter: value,
-              })
-            }
-            value={
-              (this.state.isSettingWarmupTime && this.state.warmupCounter) ||
-              this.state.warmupTime
-            }
-          />
-        </View>
-
-        <View style={styles.buttonContainer}>
-          {this.timer ? (
+          <View style={styles.buttonContainer}>
+            {this.timer ? (
+              <LifeButton
+                size={200}
+                textSize={50}
+                title={'Pause'}
+                onPress={this.pauseCountdown}
+              />
+            ) : this.isCountdownInProgress() || this.isWarmupRunning() ? (
+              <LifeButton
+                size={200}
+                textSize={50}
+                title={'Resume'}
+                onPress={this.startWarmup}
+              />
+            ) : (
+              <LifeButton
+                size={200}
+                textSize={50}
+                title={'Start'}
+                onPress={this.startWarmup}
+              />
+            )}
+          </View>
+          <View style={styles.footerContainer}>
             <LifeButton
-              size={200}
-              textSize={50}
-              title={'Pause'}
-              onPress={this.pauseCountdown}
+              size={60}
+              textSize={15}
+              title={'Reset'}
+              onPress={this.resetCountdown}
             />
-          ) : this.isCountdownInProgress() || this.isWarmupRunning() ? (
-            <LifeButton
-              size={200}
-              textSize={50}
-              title={'Resume'}
-              onPress={this.startWarmup}
-            />
-          ) : (
-            <LifeButton
-              size={200}
-              textSize={50}
-              title={'Start'}
-              onPress={this.startWarmup}
-            />
-          )}
+          </View>
         </View>
-        <View style={styles.footerContainer}>
-          <LifeButton
-            size={60}
-            textSize={15}
-            title={'Reset'}
-            onPress={this.resetCountdown}
-          />
-        </View>
-      </View>
+      </ImageBackground>
     );
   }
 
@@ -240,6 +246,7 @@ interface IAppStyle {
   footerContainer: ViewStyle;
   mainContainer: TextStyle;
   sliderContainer: ViewStyle;
+  sliderContainerTitle: TextStyle;
   timerContainer: ViewStyle;
   timerWarmupText: TextStyle;
 }
@@ -256,20 +263,31 @@ const styles = StyleSheet.create<IAppStyle>({
     width: '100%',
   },
   mainContainer: {
-    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
     height: '100%',
     width: '100%',
   },
   sliderContainer: {
     alignItems: 'center',
-    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 30,
     justifyContent: 'center',
     marginTop: 50,
+    opacity: 0.8,
+  },
+  sliderContainerTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   timerContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 40,
     marginTop: 160,
+    opacity: 0.8,
+    width: 250,
   },
   timerWarmupText: {
-    color: '#D4D422',
+    color: '#A901DB',
   },
 });
