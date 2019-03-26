@@ -19,8 +19,17 @@ export const secondsToMinutes = (secs: number) => {
   return { minutes, seconds };
 };
 
+interface ITimerStyles {
+  digitContainer: ViewStyle;
+  digitSpace: ViewStyle;
+  displayContainer: ViewStyle;
+  displayText: TextStyle;
+}
+
 interface ITimerProps {
+  backgroundColor?: string;
   changeHandler?: (time: number) => void;
+  digitSpace?: number;
   displayTime: number;
   displayTimeStyle?: TextStyle;
   isEditMode: boolean;
@@ -40,29 +49,31 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
     }
   };
 
+  const styles = StyleSheet.create<ITimerStyles>({
+    digitContainer: {
+      flexDirection: 'row',
+    },
+    digitSpace: {
+      width: props.digitSpace,
+    },
+    displayContainer: {
+      alignItems: 'center',
+      backgroundColor: props.backgroundColor,
+    },
+    displayText: {
+      color: '#000000',
+      fontSize: 76,
+      ...props.displayTimeStyle,
+    },
+  });
+
   return (
     <View style={styles.displayContainer}>
       {!props.isEditMode && (
         <View style={styles.digitContainer}>
-          <Text
-            style={[
-              styles.displayText,
-              styles.digitSpace,
-              props.displayTimeStyle,
-            ]}
-          >
-            {minutes}
-          </Text>
-          <Text style={[styles.displayText, props.displayTimeStyle]}>:</Text>
-          <Text
-            style={[
-              styles.displayText,
-              styles.digitSpace,
-              props.displayTimeStyle,
-            ]}
-          >
-            {seconds}
-          </Text>
+          <Text style={[styles.displayText, styles.digitSpace]}>{minutes}</Text>
+          <Text style={[styles.displayText]}>:</Text>
+          <Text style={[styles.displayText, styles.digitSpace]}>{seconds}</Text>
         </View>
       )}
 
@@ -78,7 +89,7 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
             onEndEditing={(
               _: NativeSyntheticEvent<TextInputEndEditingEventData>,
             ) => endEditing()}
-            style={[styles.displayText, styles.editSpace]}
+            style={[styles.displayText, styles.digitSpace]}
             placeholder={minutes}
             selection={{ start: 0, end: 0 }}
           />
@@ -88,34 +99,5 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
     </View>
   );
 };
-
-interface ITimerStyles {
-  digitContainer: ViewStyle;
-  digitSpace: ViewStyle;
-  displayContainer: ViewStyle;
-  displayText: TextStyle;
-  editSpace: ViewStyle;
-}
-
-const styles = StyleSheet.create<ITimerStyles>({
-  digitContainer: {
-    flexDirection: 'row',
-  },
-  digitSpace: {
-    width: 86,
-  },
-  displayContainer: {
-    alignItems: 'center',
-    backgroundColor: '#151515',
-    height: 100,
-  },
-  displayText: {
-    color: '#FFFFFF',
-    fontSize: 76,
-  },
-  editSpace: {
-    width: 100,
-  },
-});
 
 export default Timer;

@@ -26,28 +26,32 @@ export const TimeSlider: React.FunctionComponent<ITimeSliderProps> = (
         style={styles.slider}
         value={props.intervals.indexOf(props.value)}
       />
-      <Timer displayTime={props.value} isEditMode={false} />
+      <Timer
+        digitSpace={22}
+        displayTimeStyle={styles.scaleText}
+        displayTime={props.value}
+        isEditMode={false}
+      />
     </View>
   );
 };
 
 export interface ITimeSliderStyle {
+  scaleText: TextStyle;
   slider: TextStyle;
   sliderContainer: ViewStyle;
 }
 
 const styles = StyleSheet.create<ITimeSliderStyle>({
+  scaleText: {
+    fontSize: 18,
+  },
   slider: {
-    color: '#FFFFFF',
     width: 200,
   },
   sliderContainer: {
-    backgroundColor: '#FFFFFF',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 40,
-    marginTop: 20,
-    padding: 10,
     width: '100%',
   },
 });
