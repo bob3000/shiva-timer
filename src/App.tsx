@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import FadeInView from './components/FadeInView';
 import LifeButton from './components/LifeButton';
 import Timer from './components/Timer';
 import TimeSlider from './components/TimeSlider';
@@ -60,10 +61,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
     return (
       <ImageBackground
-        style={[{ height: '100%', width: '100%' }]}
+        style={styles.backgroundImage}
         source={require('../assets/backgrounds/lord_shiva.jpg')}
       >
-        <View style={styles.mainContainer}>
+        <FadeInView style={styles.mainContainer}>
           <View style={styles.timerContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -142,7 +143,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
               onPress={this.resetCountdown}
             />
           </View>
-        </View>
+        </FadeInView>
       </ImageBackground>
     );
   }
@@ -242,6 +243,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 }
 
 interface IAppStyle {
+  backgroundImage: ViewStyle;
   buttonContainer: ViewStyle;
   footerContainer: ViewStyle;
   mainContainer: TextStyle;
@@ -252,6 +254,10 @@ interface IAppStyle {
 }
 
 const styles = StyleSheet.create<IAppStyle>({
+  backgroundImage: {
+    height: '100%',
+    width: '100%',
+  },
   buttonContainer: {
     alignItems: 'center',
     marginTop: 50,
