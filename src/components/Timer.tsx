@@ -20,22 +20,22 @@ export const secondsToMinutes = (secs: number) => {
 };
 
 interface ITimerProps {
-  changeHandler: (time: number) => void;
+  changeHandler?: (time: number) => void;
   displayTime: number;
   displayTimeStyle?: TextStyle;
   isEditMode: boolean;
-  endEditingHandler: () => void;
+  endEditingHandler?: () => void;
 }
 
 export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
   const { minutes, seconds } = secondsToMinutes(props.displayTime);
 
   const endEditing = () => {
-    props.endEditingHandler();
+    if (props.endEditingHandler) props.endEditingHandler();
   };
 
   const changeText = (time: string) => {
-    if (!isNaN(parseInt(time, 10))) {
+    if (!isNaN(parseInt(time, 10)) && props.changeHandler) {
       props.changeHandler(parseInt(time, 10) * 60);
     }
   };

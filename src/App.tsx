@@ -2,14 +2,13 @@ import { Audio } from 'expo';
 import * as React from 'react';
 import {
   Button,
-  Slider,
   StyleSheet,
-  Text,
   TextStyle,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Timer, { secondsToMinutes } from './components/Timer';
+import TimeSlider from './components/TimeSlider';
 
 const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
 
@@ -20,24 +19,23 @@ interface IAppState {
   isCountdownRunning: boolean;
   isEditing: boolean;
   isSettingWarmupTime: boolean;
-  isWarmupRunning: boolean;
+  warmupCounter: number;
   warmupTime: number;
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
-  private countdownInput = 0;
-  private setWarmupTime = 0;
+  private countdownInput = 60;
   private timer?: number;
 
   constructor(props: IAppProps) {
     super(props);
     this.state = {
-      countdownTime: 0,
+      countdownTime: 60,
       isCountdownRunning: false,
       isEditing: false,
       isSettingWarmupTime: false,
-      isWarmupRunning: false,
-      warmupTime: 0,
+      warmupCounter: 10,
+      warmupTime: 10,
     };
   }
 
@@ -48,7 +46,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
   public render() {
     let displayTime = 0;
     if (this.isWarmupRunning()) {
-      displayTime = this.state.warmupTime;
+      displayTime = this.state.warmupCounter;
     } else {
       displayTime = this.state.countdownTime;
     }
@@ -74,25 +72,26 @@ export default class App extends React.Component<IAppProps, IAppState> {
           />
         </TouchableOpacity>
 
-        <View>
-          <Slider
-            disabled={this.state.isCountdownRunning || this.isWarmupRunning()}
-            minimumValue={0}
-            maximumValue={6}
-            onSlidingComplete={() => {
-              this.setWarmupTime = this.state.warmupTime;
-              this.setState({ isSettingWarmupTime: false });
-            }}
-            onValueChange={(value: number) =>
-              this.setState({
-                isSettingWarmupTime: true,
-                warmupTime: warmupIntervals[Math.trunc(value)],
-              })
-            }
-            value={warmupIntervals.indexOf(this.setWarmupTime)}
-          />
-          <Text>{this.displayWarmupTime()}</Text>
-        </View>
+        <TimeSlider
+          disabled={this.isCountdownInProgress() || this.isWarmupRunning()}
+          intervals={warmupIntervals}
+          onSlidingComplete={() =>
+            this.setState({
+              isSettingWarmupTime: false,
+              warmupTime: this.state.warmupCounter,
+            })
+          }
+          onValueChange={(value: number) =>
+            this.setState({
+              isSettingWarmupTime: true,
+              warmupCounter: value,
+            })
+          }
+          value={
+            (this.state.isSettingWarmupTime && this.state.warmupCounter) ||
+            this.state.warmupTime
+          }
+        />
 
         <View>
           {this.timer ? (
@@ -116,19 +115,19 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public resetCountdown = () => {
     this.pauseCountdown();
-    this.setState({ countdownTime: 0, warmupTime: this.setWarmupTime });
+    this.setState({ countdownTime: 0, warmupCounter: this.state.warmupTime });
   }
 
   public startWarmup = () => {
     if (this.state.countdownTime <= 0 || this.timer) return;
-    if (this.state.warmupTime <= 0) {
+    if (this.state.warmupCounter <= 0) {
       if (this.timer) clearInterval(this.timer);
       this.startCountdown();
       return;
     }
 
     this.timer = setInterval(() => {
-      if (this.state.warmupTime <= 0) {
+      if (this.state.warmupCounter <= 0) {
         this.pauseCountdown();
         this.warmupFinishedHandler();
         this.startCountdown();
@@ -136,7 +135,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
       }
       this.setState({
         isCountdownRunning: true,
-        warmupTime: this.state.warmupTime - 1,
+        warmupCounter: this.state.warmupCounter - 1,
       });
     },                       1000);
   }
@@ -150,7 +149,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
         this.countdownFinishedHandler();
         this.setState({
           countdownTime: this.countdownInput,
-          warmupTime: this.setWarmupTime,
+          warmupCounter: this.state.warmupTime,
         });
         return;
       }
@@ -170,8 +169,14 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   private isWarmupRunning = () => {
     return Boolean(
-      this.state.warmupTime > 0 && this.state.warmupTime < this.setWarmupTime,
+      this.state.warmupCounter > 0 &&
+        this.state.warmupCounter < this.state.warmupTime &&
+        !this.state.isSettingWarmupTime,
     );
+  }
+
+  private isCountdownInProgress = () => {
+    return this.state.countdownTime < this.countdownInput;
   }
 
   private countdownFinishedHandler = () => {
@@ -194,8 +199,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   private displayWarmupTime = () => {
     const displayTime = this.state.isSettingWarmupTime
-      ? this.state.warmupTime
-      : this.setWarmupTime;
+      ? this.state.warmupCounter
+      : this.state.warmupTime;
     const { minutes, seconds } = secondsToMinutes(displayTime);
     return `${minutes}:${seconds}`;
   }
