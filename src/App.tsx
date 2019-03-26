@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LifeButton from './components/LifeButton';
 import Timer, { secondsToMinutes } from './components/Timer';
 import TimeSlider from './components/TimeSlider';
 
@@ -52,7 +53,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <View>
+      <View style={styles.mainContainer}>
         <TouchableOpacity
           onPress={() => {
             if (this.state.isCountdownRunning) return;
@@ -95,11 +96,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
         <View>
           {this.timer ? (
-            <Button title={'Pause'} onPress={this.pauseCountdown} />
+            <LifeButton title={'Pause'} onPress={this.pauseCountdown} />
           ) : (
-            <Button title={'Start'} onPress={this.startWarmup} />
+            <LifeButton title={'Start'} onPress={this.startWarmup} />
           )}
-          <Button title={'Reset'} onPress={this.resetCountdown} />
         </View>
       </View>
     );
@@ -196,21 +196,19 @@ export default class App extends React.Component<IAppProps, IAppState> {
       console.log(error);
     }
   }
-
-  private displayWarmupTime = () => {
-    const displayTime = this.state.isSettingWarmupTime
-      ? this.state.warmupCounter
-      : this.state.warmupTime;
-    const { minutes, seconds } = secondsToMinutes(displayTime);
-    return `${minutes}:${seconds}`;
-  }
 }
 
 interface IAppStyle {
+  mainContainer: TextStyle;
   timerDisplayTime: TextStyle;
 }
 
 const styles = StyleSheet.create<IAppStyle>({
+  mainContainer: {
+    backgroundColor: '#000000',
+    height: '100%',
+    width: '100%',
+  },
   timerDisplayTime: {
     color: '#D4D422',
   },
