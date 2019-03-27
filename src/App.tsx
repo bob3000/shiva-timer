@@ -290,7 +290,9 @@ const styles = StyleSheet.create<IAppStyle>({
   sliderContainer: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+    borderColor: '#000000',
     borderRadius: 30,
+    borderWidth: 1,
     justifyContent: 'center',
     marginTop: 50,
     opacity: 0.8,
@@ -302,8 +304,10 @@ const styles = StyleSheet.create<IAppStyle>({
   },
   timerContainer: {
     backgroundColor: '#FFFFFF',
+    borderColor: '#000000',
     borderRadius: 40,
-    marginTop: 160,
+    borderWidth: 1,
+    marginTop: 100,
     opacity: 0.8,
     width: 250,
   },

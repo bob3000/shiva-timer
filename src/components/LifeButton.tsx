@@ -34,7 +34,9 @@ export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
     },
     mainContainer: {
       alignItems: 'center',
+      borderColor: '#000000',
       borderRadius: 100,
+      borderWidth: 1,
       height: props.size,
       justifyContent: 'center',
       opacity: 0.8,
