@@ -85,7 +85,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
               <Timer
                 changeHandler={this.setCountdownInput}
                 endEditingHandler={this.endTimerEdit}
-                digitSpace={86}
+                digitSpace={95}
                 displayTime={displayTime}
                 isEditMode={this.state.isEditing}
               />
@@ -309,6 +309,6 @@ const styles = StyleSheet.create<IAppStyle>({
     borderWidth: 1,
     marginTop: 100,
     opacity: 0.8,
-    width: 250,
+    width: 280,
   },
 });

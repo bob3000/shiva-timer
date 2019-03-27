@@ -32,7 +32,7 @@ export const TimeSlider: React.FunctionComponent<ITimeSliderProps> = (
         value={props.intervals.indexOf(props.value)}
       />
       <Timer
-        digitSpace={22}
+        digitSpace={25}
         displayTimeStyle={styles.scaleText}
         displayTime={props.value}
         isEditMode={false}

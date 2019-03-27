@@ -71,7 +71,15 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
     <View style={styles.displayContainer}>
       {!props.isEditMode && (
         <View style={styles.digitContainer}>
-          <Text style={[styles.displayText, styles.digitSpace]}>{minutes}</Text>
+          <Text
+            style={[
+              styles.displayText,
+              styles.digitSpace,
+              { textAlign: 'right' },
+            ]}
+          >
+            {minutes}
+          </Text>
           <Text style={[styles.displayText]}>:</Text>
           <Text style={[styles.displayText, styles.digitSpace]}>{seconds}</Text>
         </View>
@@ -89,7 +97,11 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
             onEndEditing={(
               _: NativeSyntheticEvent<TextInputEndEditingEventData>,
             ) => endEditing()}
-            style={[styles.displayText, styles.digitSpace]}
+            style={[
+              styles.displayText,
+              styles.digitSpace,
+              { textAlign: 'center' },
+            ]}
             placeholder={minutes}
             selection={{ start: 0, end: 0 }}
           />
