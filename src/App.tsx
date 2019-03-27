@@ -277,6 +277,7 @@ const styles = StyleSheet.create<IAppStyle>({
     marginTop: 50,
   },
   footerContainer: {
+    alignItems: 'flex-start',
     bottom: 0,
     padding: 10,
     position: 'absolute',
