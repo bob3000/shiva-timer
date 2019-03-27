@@ -36,6 +36,10 @@ interface IAppState {
 export default class App extends React.Component<IAppProps, IAppState> {
   private countdownInput = initialState.countdownTime;
   private timer?: number;
+  private sounds = {
+    bell: require('../assets/sounds/signal_tone.mp3'),
+    om: require('../assets/sounds/om_chant.mp3'),
+  };
 
   constructor(props: IAppProps) {
     super(props);
@@ -45,6 +49,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
       isSettingWarmupTime: false,
       ...initialState,
     };
+  }
+
+  public componentDidMount() {
+    this.playSound(this.sounds.om);
   }
 
   public componentWillUnmount() {
@@ -224,17 +232,17 @@ export default class App extends React.Component<IAppProps, IAppState> {
   }
 
   private countdownFinishedHandler = () => {
-    this.playBellSound();
+    this.playSound(this.sounds.bell);
   }
 
   private warmupFinishedHandler = () => {
-    this.playBellSound();
+    this.playSound(this.sounds.bell);
   }
 
-  private async playBellSound() {
+  private async playSound(sound: any) {
     const soundObject = new Audio.Sound();
     try {
-      await soundObject.loadAsync(require('../assets/sounds/signal_tone.mp3'));
+      await soundObject.loadAsync(sound);
       await soundObject.playAsync();
     } catch (error) {
       console.log(error);
