@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timer snapshot test 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": undefined,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000000",
+            "fontSize": 76,
+          },
+          Object {
+            "width": undefined,
+          },
+        ]
+      }
+    >
+      00
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000000",
+            "fontSize": 76,
+          },
+        ]
+      }
+    >
+      :
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#000000",
+            "fontSize": 76,
+          },
+          Object {
+            "width": undefined,
+          },
+        ]
+      }
+    >
+      01
+    </Text>
+  </View>
+</View>
+`;

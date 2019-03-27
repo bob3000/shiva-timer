@@ -5,8 +5,8 @@ import Timer from '../components/Timer';
 export interface ITimeSliderProps {
   disabled?: boolean;
   intervals: number[];
-  onSlidingComplete: () => void;
-  onValueChange: (value: number) => void;
+  onSlidingComplete?: () => void;
+  onValueChange?: (value: number) => void;
   value: number;
 }
 
@@ -23,7 +23,9 @@ export const TimeSlider: React.FunctionComponent<ITimeSliderProps> = (
         minimumValue={0}
         onSlidingComplete={props.onSlidingComplete}
         onValueChange={(value: number) => {
-          props.onValueChange(props.intervals[Math.trunc(value)]);
+          if (props.onValueChange) {
+            props.onValueChange(props.intervals[Math.trunc(value)]);
+          }
         }}
         style={styles.slider}
         thumbTintColor={'#000000'}

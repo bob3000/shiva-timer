@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Animated, Text, View, ViewStyle } from 'react-native';
+import { Animated, ViewStyle } from 'react-native';
 
 interface IFadeInViewProps {
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 
 interface IFadeInViewState {

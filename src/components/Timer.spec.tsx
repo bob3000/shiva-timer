@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import App from './App';
+import Timer from './Timer';
 
-jest.useFakeTimers();
-
-describe('App', () => {
+describe('Timer', () => {
   it('snapshot test', () => {
-    const tree = renderer.create(<App />).toJSON();
+    const tree = renderer.create(<Timer displayTime={1} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

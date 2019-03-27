@@ -32,7 +32,7 @@ interface ITimerProps {
   digitSpace?: number;
   displayTime: number;
   displayTimeStyle?: TextStyle;
-  isEditMode: boolean;
+  isEditMode?: boolean;
   endEditingHandler?: () => void;
 }
 

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import App from './App';
+import FadeInView from './FadeInView';
 
 jest.useFakeTimers();
 
-describe('App', () => {
+describe('FadeInView', () => {
   it('snapshot test', () => {
-    const tree = renderer.create(<App />).toJSON();
+    const tree = renderer.create(<FadeInView />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

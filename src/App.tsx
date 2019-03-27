@@ -22,9 +22,9 @@ const initialState = {
 
 const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
 
-interface IAppProps {}
+export interface IAppProps {}
 
-interface IAppState {
+export interface IAppState {
   countdownTime: number;
   isCountdownRunning: boolean;
   isEditing: boolean;
@@ -244,12 +244,14 @@ export default class App extends React.Component<IAppProps, IAppState> {
     this.playSound(this.sounds.bell);
   }
 
+  // tslint:disable-next-line: no-any
   private async playSound(sound: any) {
     const soundObject = new Audio.Sound();
     try {
       await soundObject.loadAsync(sound);
       await soundObject.playAsync();
     } catch (error) {
+      // tslint:disable-next-line: no-console
       console.log(error);
     }
   }
@@ -263,7 +265,6 @@ interface IAppStyle {
   sliderContainer: ViewStyle;
   sliderContainerTitle: TextStyle;
   timerContainer: ViewStyle;
-  timerWarmupText: TextStyle;
 }
 
 const styles = StyleSheet.create<IAppStyle>({
@@ -305,8 +306,5 @@ const styles = StyleSheet.create<IAppStyle>({
     marginTop: 160,
     opacity: 0.8,
     width: 250,
-  },
-  timerWarmupText: {
-    color: '#A901DB',
   },
 });

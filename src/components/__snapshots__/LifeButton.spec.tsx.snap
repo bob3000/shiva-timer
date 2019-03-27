@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LifeButton snapshot test 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <View
+    accessibilityIgnoresInvertColors={true}
+    style={
+      Array [
+        Object {
+          "opacity": 0.8,
+        },
+        Object {
+          "alignItems": "center",
+          "borderRadius": 100,
+          "height": undefined,
+          "justifyContent": "center",
+          "opacity": 0.8,
+          "width": undefined,
+        },
+      ]
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Array [
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          Object {
+            "height": undefined,
+            "width": undefined,
+          },
+          undefined,
+        ]
+      }
+    />
+    <View
+      style={
+        Object {
+          "borderRadius": 40,
+          "opacity": 1,
+          "padding": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#000000",
+            "fontSize": undefined,
+            "fontWeight": "bold",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

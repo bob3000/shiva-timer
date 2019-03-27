@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import App from './App';
+import LifeButton from './LifeButton';
 
-jest.useFakeTimers();
-
-describe('App', () => {
+describe('LifeButton', () => {
   it('snapshot test', () => {
-    const tree = renderer.create(<App />).toJSON();
+    const tree = renderer.create(<LifeButton />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

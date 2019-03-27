@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeSlider snapshot test 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "padding": 15,
+    }
+  }
+>
+  <RCTSlider
+    disabled={false}
+    enabled={true}
+    maximumTrackTintColor="#000000"
+    maximumValue={2}
+    minimumTrackTintColor="#000000"
+    minimumValue={0}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onValueChange={[Function]}
+    step={0}
+    style={
+      Array [
+        Object {
+          "height": 40,
+        },
+        Object {
+          "width": 200,
+        },
+      ]
+    }
+    thumbTintColor="#000000"
+    value={2}
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": undefined,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#000000",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "width": 22,
+            },
+          ]
+        }
+      >
+        00
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#000000",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        :
+      </Text>
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#000000",
+              "fontSize": 18,
+              "fontWeight": "bold",
+            },
+            Object {
+              "width": 22,
+            },
+          ]
+        }
+      >
+        04
+      </Text>
+    </View>
+  </View>
+</View>
+`;

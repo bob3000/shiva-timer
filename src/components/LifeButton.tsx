@@ -11,9 +11,9 @@ import {
 
 interface ILifeButtonProps {
   background?: ViewStyle;
-  onPress: () => void;
+  onPress?: () => void;
   size?: number | string;
-  title: string;
+  title?: string;
   textSize?: number;
 }
 
