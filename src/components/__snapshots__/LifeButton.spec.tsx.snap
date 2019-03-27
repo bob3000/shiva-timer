@@ -25,7 +25,9 @@ exports[`LifeButton snapshot test 1`] = `
         },
         Object {
           "alignItems": "center",
+          "borderColor": "#000000",
           "borderRadius": 100,
+          "borderWidth": 1,
           "height": undefined,
           "justifyContent": "center",
           "opacity": 0.8,

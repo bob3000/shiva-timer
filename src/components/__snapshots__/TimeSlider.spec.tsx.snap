@@ -58,7 +58,10 @@ exports[`TimeSlider snapshot test 1`] = `
               "fontWeight": "bold",
             },
             Object {
-              "width": 22,
+              "width": 25,
+            },
+            Object {
+              "textAlign": "right",
             },
           ]
         }
@@ -87,7 +90,7 @@ exports[`TimeSlider snapshot test 1`] = `
               "fontWeight": "bold",
             },
             Object {
-              "width": 22,
+              "width": 25,
             },
           ]
         }

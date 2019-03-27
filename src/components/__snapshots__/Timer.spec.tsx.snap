@@ -26,6 +26,9 @@ exports[`Timer snapshot test 1`] = `
           Object {
             "width": undefined,
           },
+          Object {
+            "textAlign": "right",
+          },
         ]
       }
     >
