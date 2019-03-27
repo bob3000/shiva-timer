@@ -16,8 +16,8 @@ import TimeSlider from './components/TimeSlider';
 
 const initialState = {
   countdownTime: 600,
-  warmupCounter: 10,
-  warmupTime: 10,
+  warmupCounter: 30,
+  warmupTime: 30,
 };
 
 const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
@@ -87,9 +87,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
                 endEditingHandler={this.endTimerEdit}
                 digitSpace={86}
                 displayTime={displayTime}
-                displayTimeStyle={
-                  this.isWarmupRunning() ? styles.timerWarmupText : undefined
-                }
                 isEditMode={this.state.isEditing}
               />
             </TouchableOpacity>
@@ -122,29 +119,37 @@ export default class App extends React.Component<IAppProps, IAppState> {
           <View style={styles.buttonContainer}>
             {this.timer ? (
               <LifeButton
+                background={
+                  this.isWarmupRunning()
+                    ? { backgroundColor: '#F6CEF5' }
+                    : { backgroundColor: '#AC58FA' }
+                }
                 size={200}
                 textSize={50}
-                title={'Pause'}
+                title={''} // Pause
                 onPress={this.pauseCountdown}
               />
             ) : this.isCountdownInProgress() || this.isWarmupRunning() ? (
               <LifeButton
+                background={{ backgroundColor: '#31B404' }}
                 size={200}
                 textSize={50}
-                title={'Resume'}
+                title={''} // Resume
                 onPress={this.startWarmup}
               />
             ) : (
               <LifeButton
+                background={{ backgroundColor: '#FFFFFF' }}
                 size={200}
                 textSize={50}
-                title={'Start'}
+                title={''} // Start
                 onPress={this.startWarmup}
               />
             )}
           </View>
           <View style={styles.footerContainer}>
             <LifeButton
+              background={{ backgroundColor: '#FFFFFF' }}
               size={60}
               textSize={15}
               title={'Reset'}

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  ImageBackground,
   StyleSheet,
   Text,
   TextStyle,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 
 interface ILifeButtonProps {
+  background?: ViewStyle;
   onPress: () => void;
   size?: number | string;
   title: string;
@@ -16,17 +18,22 @@ interface ILifeButtonProps {
 }
 
 interface ILifeButtonStyle {
+  background: ViewStyle;
   mainContainer: ViewStyle;
   titleText: TextStyle;
+  titleTextContainer: ViewStyle;
 }
 
 export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
   props,
 ) => {
   const styles = StyleSheet.create<ILifeButtonStyle>({
+    background: {
+      opacity: 0.8,
+      ...props.background,
+    },
     mainContainer: {
       alignItems: 'center',
-      backgroundColor: '#FFFFFF',
       borderRadius: 100,
       height: props.size,
       justifyContent: 'center',
@@ -38,13 +45,23 @@ export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
       fontSize: props.textSize,
       fontWeight: 'bold',
     },
+    titleTextContainer: {
+      borderRadius: 40,
+      opacity: 1,
+      padding: 5,
+    },
   });
 
   return (
-    <TouchableOpacity onPress={props.onPress}>
-      <View style={styles.mainContainer}>
-        <Text style={styles.titleText}>{props.title}</Text>
-      </View>
+    <TouchableOpacity activeOpacity={0.7} onPress={props.onPress}>
+      <ImageBackground
+        source={require('../../assets/images/flower_of_life.png')}
+        style={[styles.background, styles.mainContainer]}
+      >
+        <View style={styles.titleTextContainer}>
+          <Text style={styles.titleText}>{props.title}</Text>
+        </View>
+      </ImageBackground>
     </TouchableOpacity>
   );
 };
