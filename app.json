@@ -9,7 +9,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/flower_of_life.png",
     "splash": {
-      "image": "./assets/backgrounds/lord_shiva.jpg",
+      "image": "./assets/backgrounds/lord_shiva.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,6 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "net.bob3000.shiva_timer",
       "supportsTablet": false
     },
     "android": {
