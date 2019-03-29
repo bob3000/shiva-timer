@@ -235,14 +235,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
   }
 
   private loadState() {
-    AsyncStorage.getItem('state').then(state => {
-      console.log(state);
+    AsyncStorage.getItem('state').then((state) => {
       if (state) {
         const myState = { ...JSON.parse(state) } as IAppState;
         myState.isEditing = false;
         this.setState({ ...myState });
       }
-      console.log(state);
     });
   }
 

@@ -18,11 +18,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "net.bob3000.shiva-timer",
+      "bundleIdentifier": "net.bob3000.shiva_timer",
       "supportsTablet": false
     },
     "android": {
-      "package": "net.bob3000.shiva-timer"
+      "package": "net.bob3000.shiva_timer"
     }
   }
 }
