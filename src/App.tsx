@@ -1,6 +1,7 @@
 import { Audio } from 'expo';
 import * as React from 'react';
 import {
+  AsyncStorage,
   ImageBackground,
   StyleSheet,
   Text,
@@ -53,10 +54,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public componentDidMount() {
     this.playSound(this.sounds.om);
+    this.loadState();
   }
 
   public componentWillUnmount() {
     this.pauseCountdown();
+    this.persistState();
   }
 
   public render() {
@@ -78,7 +81,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
               onPress={() => {
                 if (this.state.isCountdownRunning) return;
                 !this.state.isEditing
-                  ? this.setState({ isEditing: !this.state.isEditing })
+                  ? this.setState({ isEditing: true })
                   : this.endTimerEdit();
               }}
             >
@@ -221,8 +224,27 @@ export default class App extends React.Component<IAppProps, IAppState> {
     this.countdownInput = time;
   }
 
-  public endTimerEdit = () =>
-    this.setState({ countdownTime: this.countdownInput, isEditing: false })
+  public endTimerEdit = () => {
+    this.setState({ countdownTime: this.countdownInput, isEditing: false });
+    this.persistState();
+  }
+
+  private persistState() {
+    const state = { ...this.state };
+    AsyncStorage.setItem('state', JSON.stringify(state));
+  }
+
+  private loadState() {
+    AsyncStorage.getItem('state').then(state => {
+      console.log(state);
+      if (state) {
+        const myState = { ...JSON.parse(state) } as IAppState;
+        myState.isEditing = false;
+        this.setState({ ...myState });
+      }
+      console.log(state);
+    });
+  }
 
   private isWarmupRunning = () => {
     return Boolean(

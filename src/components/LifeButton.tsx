@@ -24,9 +24,7 @@ interface ILifeButtonStyle {
   titleTextContainer: ViewStyle;
 }
 
-export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
-  props,
-) => {
+export const LifeButton: React.FunctionComponent<ILifeButtonProps> = props => {
   const styles = StyleSheet.create<ILifeButtonStyle>({
     background: {
       opacity: 0.8,
