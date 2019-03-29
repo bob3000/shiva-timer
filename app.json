@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Shiva Timer",
-    "slug": "shivatimer",
-    "privacy": "public",
+    "slug": "shiva-timer",
+    "privacy": "unlisted",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
@@ -18,7 +18,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "net.bob3000.shiva-timer",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "net.bob3000.shiva-timer"
     }
   }
 }
