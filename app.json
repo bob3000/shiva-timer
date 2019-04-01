@@ -7,9 +7,9 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/flower_of_life.png",
+    "icon": "./assets/images/shiva_icon.png",
     "splash": {
-      "image": "./assets/backgrounds/lord_shiva.png",
+      "image": "./assets/images/flower_of_life.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
