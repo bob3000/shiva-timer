@@ -1,4 +1,4 @@
-import { Audio } from 'expo';
+import { Audio, KeepAwake } from 'expo';
 import * as React from 'react';
 import {
   AsyncStorage,
@@ -15,6 +15,7 @@ import LifeButton from './components/LifeButton';
 import Timer from './components/Timer';
 import TimeSlider from './components/TimeSlider';
 
+const persistentState = ['countdownTime', 'warmupTime'];
 const initialState = {
   countdownTime: 600,
   warmupCounter: 30,
@@ -26,6 +27,8 @@ const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
 export interface IAppProps {}
 
 export interface IAppState {
+  // tslint:disable-next-line: no-any
+  [key: string]: any;
   countdownTime: number;
   isCountdownRunning: boolean;
   isEditing: boolean;
@@ -59,7 +62,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public componentWillUnmount() {
     this.pauseCountdown();
-    this.persistState();
   }
 
   public render() {
@@ -68,6 +70,11 @@ export default class App extends React.Component<IAppProps, IAppState> {
       displayTime = this.state.warmupCounter;
     } else {
       displayTime = this.state.countdownTime;
+    }
+    if (this.isCountdownInProgress() || this.isWarmupRunning()) {
+      KeepAwake.activate();
+    } else {
+      KeepAwake.deactivate();
     }
 
     return (
@@ -100,12 +107,15 @@ export default class App extends React.Component<IAppProps, IAppState> {
             <TimeSlider
               disabled={this.isCountdownInProgress() || this.isWarmupRunning()}
               intervals={warmupIntervals}
-              onSlidingComplete={() =>
-                this.setState({
-                  isSettingWarmupTime: false,
-                  warmupTime: this.state.warmupCounter,
-                })
-              }
+              onSlidingComplete={() => {
+                new Promise((resolve, _) => {
+                  this.setState({
+                    isSettingWarmupTime: false,
+                    warmupTime: this.state.warmupCounter,
+                  });
+                  resolve();
+                }).then(this.persistState.bind(this));
+              }}
               onValueChange={(value: number) =>
                 this.setState({
                   isSettingWarmupTime: true,
@@ -175,7 +185,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
   public resetCountdown = () => {
     this.pauseCountdown();
     this.countdownInput = initialState.countdownTime;
-    this.setState({ ...initialState });
+    new Promise((resolve, _) => {
+      this.setState({ ...initialState });
+      resolve();
+    }).then(this.persistState.bind(this));
   }
 
   public startWarmup = () => {
@@ -225,21 +238,42 @@ export default class App extends React.Component<IAppProps, IAppState> {
   }
 
   public endTimerEdit = () => {
-    this.setState({ countdownTime: this.countdownInput, isEditing: false });
-    this.persistState();
+    new Promise((resolve, _) => {
+      this.setState({ countdownTime: this.countdownInput, isEditing: false });
+      resolve();
+    }).then(this.persistState.bind(this));
   }
 
-  private persistState() {
-    const state = { ...this.state };
-    AsyncStorage.setItem('state', JSON.stringify(state));
+  private filterState(state: IAppProps): IAppState {
+    const filteredState = Object.entries(state).filter(
+      (entry: [string, string]) =>
+        persistentState.includes(entry[0]) ? entry : null,
+    );
+    // use Object.fromEntries when possible
+    const newState = {} as IAppState;
+    for (const [key, value] of filteredState) {
+      newState[key] = value;
+    }
+    return newState;
+  }
+
+  private async persistState() {
+    const toPersist = this.filterState(this.state);
+    await AsyncStorage.setItem(
+      'state',
+      JSON.stringify({
+        ...toPersist,
+      }),
+    );
   }
 
   private loadState() {
     AsyncStorage.getItem('state').then((state) => {
       if (state) {
         const myState = { ...JSON.parse(state) } as IAppState;
-        myState.isEditing = false;
-        this.setState({ ...myState });
+        const newState = this.filterState(myState);
+        this.countdownInput = newState.countdownTime;
+        this.setState({ ...newState, warmupCounter: newState.warmupTime });
       }
     });
   }
