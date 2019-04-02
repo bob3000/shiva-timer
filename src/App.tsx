@@ -10,6 +10,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import AboutAlert from './components/AboutAlert';
 import FadeInView from './components/FadeInView';
 import LifeButton from './components/LifeButton';
 import Timer from './components/Timer';
@@ -29,6 +30,7 @@ export interface IAppProps {}
 export interface IAppState {
   // tslint:disable-next-line: no-any
   [key: string]: any;
+  aboutVisible: boolean;
   countdownTime: number;
   isCountdownRunning: boolean;
   isEditing: boolean;
@@ -48,6 +50,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
     super(props);
     this.state = {
+      aboutVisible: false,
       isCountdownRunning: false,
       isEditing: false,
       isSettingWarmupTime: false,
@@ -168,6 +171,18 @@ export default class App extends React.Component<IAppProps, IAppState> {
               title={'Reset'}
               onPress={this.resetCountdown}
             />
+            <View style={styles.aboutLink}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.setState({ aboutVisible: true })}
+              >
+                <Text>about Shiva Timer</Text>
+              </TouchableOpacity>
+              <AboutAlert
+                visible={this.state.aboutVisible}
+                okHandler={() => this.setState({ aboutVisible: false })}
+              />
+            </View>
           </View>
         </FadeInView>
       </ImageBackground>
@@ -312,6 +327,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 }
 
 interface IAppStyle {
+  aboutLink: TextStyle;
   backgroundImage: ViewStyle;
   buttonContainer: ViewStyle;
   footerContainer: ViewStyle;
@@ -322,6 +338,14 @@ interface IAppStyle {
 }
 
 const styles = StyleSheet.create<IAppStyle>({
+  aboutLink: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    color: '#000000',
+    opacity: 0.8,
+    padding: 5,
+  },
   backgroundImage: {
     height: '100%',
     width: '100%',
@@ -331,8 +355,10 @@ const styles = StyleSheet.create<IAppStyle>({
     marginTop: 50,
   },
   footerContainer: {
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     bottom: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 10,
     position: 'absolute',
     width: '100%',

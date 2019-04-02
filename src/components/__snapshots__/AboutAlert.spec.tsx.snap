@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AboutAlert snapshot test 1`] = `
+<Text
+  style={
+    Object {
+      "height": 0,
+    }
+  }
+>
+  ;
+</Text>
+`;

@@ -347,8 +347,10 @@ exports[`App snapshot test 1`] = `
     <View
       style={
         Object {
-          "alignItems": "flex-start",
+          "alignItems": "flex-end",
           "bottom": 0,
+          "flexDirection": "row",
+          "justifyContent": "space-between",
           "padding": 10,
           "position": "absolute",
           "width": "100%",
@@ -431,6 +433,38 @@ exports[`App snapshot test 1`] = `
               Reset
             </Text>
           </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 20,
+            "color": "#000000",
+            "opacity": 0.8,
+            "padding": 5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text>
+            about Shiva Timer
+          </Text>
         </View>
       </View>
     </View>
