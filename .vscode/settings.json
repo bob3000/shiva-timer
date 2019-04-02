@@ -3,5 +3,8 @@
   "typescript.preferences.quoteStyle": "double",
   "javascript.preferences.quoteStyle": "double",
 "prettier.tslintIntegration": true,
-"prettier.arrowParens": "always"
+"prettier.arrowParens": "always",
+"cSpell.words": [
+  "Kautz"
+]
 }
