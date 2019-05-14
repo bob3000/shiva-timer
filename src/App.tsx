@@ -11,6 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import AboutAlert from './components/AboutAlert';
+import { DropdownMenu } from './components/DropDownMenu';
 import FadeInView from './components/FadeInView';
 import LifeButton from './components/LifeButton';
 import Timer from './components/Timer';
@@ -19,8 +20,8 @@ import TimeSlider from './components/TimeSlider';
 const persistentState = ['countdownTime', 'warmupTime'];
 const initialState = {
   countdownTime: 600,
-  warmupCounter: 30,
-  warmupTime: 30,
+  warmupCounter: 60,
+  warmupTime: 60,
 };
 
 const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
@@ -30,11 +31,13 @@ export interface IAppProps {}
 export interface IAppState {
   // tslint:disable-next-line: no-any
   [key: string]: any;
-  aboutVisible: boolean;
+  isAboutVisible: boolean;
   countdownTime: number;
   isCountdownRunning: boolean;
+  isDropdownVisible: boolean;
   isEditing: boolean;
   isSettingWarmupTime: boolean;
+  toolbarMenuVisible: boolean;
   warmupCounter: number;
   warmupTime: number;
 }
@@ -50,10 +53,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {
     super(props);
     this.state = {
-      aboutVisible: false,
+      isAboutVisible: false,
       isCountdownRunning: false,
+      isDropdownVisible: false,
       isEditing: false,
       isSettingWarmupTime: false,
+      toolbarMenuVisible: false,
       ...initialState,
     };
   }
@@ -85,7 +90,36 @@ export default class App extends React.Component<IAppProps, IAppState> {
         style={styles.backgroundImage}
         source={require('../assets/backgrounds/lord_shiva.jpg')}
       >
-        <FadeInView style={styles.mainContainer}>
+        <View style={styles.mainContainer}>
+          <DropdownMenu
+            isVisible={this.state.isDropdownVisible}
+            options={[
+              {
+                onPress: () =>
+                  this.setState({
+                    isAboutVisible: true,
+                    isDropdownVisible: false,
+                  }),
+                title: 'about',
+              },
+            ]}
+          />
+          <AboutAlert
+            visible={this.state.isAboutVisible}
+            okHandler={() => this.setState({ isAboutVisible: false })}
+          />
+          <View style={styles.aboutLink}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() =>
+                this.setState({
+                  isDropdownVisible: !this.state.isDropdownVisible,
+                })
+              }
+            >
+              <Text style={styles.aboutLinkText}>⋮</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.timerContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -171,20 +205,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
               title={'Reset'}
               onPress={this.resetCountdown}
             />
-            <View style={styles.aboutLink}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => this.setState({ aboutVisible: true })}
-              >
-                <Text>about Shiva Timer</Text>
-              </TouchableOpacity>
-              <AboutAlert
-                visible={this.state.aboutVisible}
-                okHandler={() => this.setState({ aboutVisible: false })}
-              />
-            </View>
           </View>
-        </FadeInView>
+        </View>
       </ImageBackground>
     );
   }
@@ -328,6 +350,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
 interface IAppStyle {
   aboutLink: TextStyle;
+  aboutLinkText: TextStyle;
   backgroundImage: ViewStyle;
   buttonContainer: ViewStyle;
   footerContainer: ViewStyle;
@@ -341,10 +364,17 @@ const styles = StyleSheet.create<IAppStyle>({
   aboutLink: {
     alignSelf: 'flex-end',
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
+    borderRadius: 60,
+    borderWidth: 1,
     color: '#000000',
+    marginRight: 5,
+    marginTop: 30,
     opacity: 0.8,
-    padding: 5,
+    paddingHorizontal: 15,
+  },
+  aboutLinkText: {
+    fontSize: 30,
+    fontWeight: 'bold',
   },
   backgroundImage: {
     height: '100%',
@@ -388,7 +418,7 @@ const styles = StyleSheet.create<IAppStyle>({
     borderColor: '#000000',
     borderRadius: 40,
     borderWidth: 1,
-    marginTop: 100,
+    marginTop: 70,
     opacity: 0.8,
     width: 280,
   },
