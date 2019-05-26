@@ -55,13 +55,12 @@ const styles = StyleSheet.create<IDropdownMenuStyles>({
   },
   pickerList: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 40,
+    borderRadius: 10,
     borderWidth: 1,
     opacity: 1,
     position: 'absolute',
     right: 5,
     top: 70,
     width: 100,
-    zIndex: 1,
   },
 });

@@ -91,23 +91,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
         source={require('../assets/backgrounds/lord_shiva.jpg')}
       >
         <View style={styles.mainContainer}>
-          <DropdownMenu
-            isVisible={this.state.isDropdownVisible}
-            options={[
-              {
-                onPress: () =>
-                  this.setState({
-                    isAboutVisible: true,
-                    isDropdownVisible: false,
-                  }),
-                title: 'about',
-              },
-            ]}
-          />
-          <AboutAlert
-            visible={this.state.isAboutVisible}
-            okHandler={() => this.setState({ isAboutVisible: false })}
-          />
           <View style={styles.aboutLink}>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -206,6 +189,27 @@ export default class App extends React.Component<IAppProps, IAppState> {
               onPress={this.resetCountdown}
             />
           </View>
+          <DropdownMenu
+            isVisible={this.state.isDropdownVisible}
+            options={[
+              {
+                onPress: () =>
+                  this.setState({
+                    isAboutVisible: true,
+                    isDropdownVisible: false,
+                  }),
+                title: 'about',
+              },
+              {
+                onPress: () => null,
+                title: 'settings',
+              },
+            ]}
+          />
+          <AboutAlert
+            visible={this.state.isAboutVisible}
+            okHandler={() => this.setState({ isAboutVisible: false })}
+          />
         </View>
       </ImageBackground>
     );
