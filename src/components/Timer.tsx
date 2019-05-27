@@ -24,9 +24,10 @@ interface ITimerStyles {
   digitSpace: ViewStyle;
   displayContainer: ViewStyle;
   displayText: TextStyle;
+  titleText: TextStyle;
 }
 
-interface ITimerProps {
+export interface ITimerProps {
   backgroundColor?: string;
   changeHandler?: (time: number) => void;
   digitSpace?: number;
@@ -34,6 +35,20 @@ interface ITimerProps {
   displayTimeStyle?: TextStyle;
   isEditMode?: boolean;
   endEditingHandler?: () => void;
+  title?: string;
+}
+
+export enum TimerType {
+  digit = 1,
+  slider,
+}
+
+export interface ITimerState {
+  intervals?: number[];
+  isEditing?: boolean;
+  timerType: TimerType;
+  timeCurrent: number;
+  timeTotal: number;
 }
 
 export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
@@ -65,10 +80,14 @@ export const Timer: React.FunctionComponent<ITimerProps> = (props) => {
       fontSize: 76,
       ...props.displayTimeStyle,
     },
+    titleText: {
+      fontSize: 18,
+    },
   });
 
   return (
     <View style={styles.displayContainer}>
+      <Text style={styles.titleText}>{props.title}</Text>
       {!props.isEditMode && (
         <View style={styles.digitContainer}>
           <Text

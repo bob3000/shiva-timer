@@ -11,6 +11,7 @@ import {
 
 interface ILifeButtonProps {
   background?: ViewStyle;
+  disabled?: boolean;
   onPress?: () => void;
   size?: number | string;
   title?: string;
@@ -55,7 +56,11 @@ export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
   });
 
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={props.onPress}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={props.onPress}
+      disabled={props.disabled}
+    >
       <ImageBackground
         source={require('../../assets/images/flower_of_life.png')}
         style={[styles.background, styles.mainContainer]}

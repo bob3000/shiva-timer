@@ -2,6 +2,7 @@ import { Audio, KeepAwake } from 'expo';
 import * as React from 'react';
 import {
   AsyncStorage,
+  FlatList,
   ImageBackground,
   StyleSheet,
   Text,
@@ -14,17 +15,10 @@ import AboutAlert from './components/AboutAlert';
 import { DropdownMenu } from './components/DropDownMenu';
 import FadeInView from './components/FadeInView';
 import LifeButton from './components/LifeButton';
-import Timer from './components/Timer';
+import Timer, { ITimerState, TimerType } from './components/Timer';
 import TimeSlider from './components/TimeSlider';
 
-const persistentState = ['countdownTime', 'warmupTime'];
-const initialState = {
-  countdownTime: 600,
-  warmupCounter: 60,
-  warmupTime: 60,
-};
-
-const warmupIntervals = [0, 10, 30, 60, 120, 300, 600];
+const initialState = {};
 
 export interface IAppProps {}
 
@@ -32,19 +26,14 @@ export interface IAppState {
   // tslint:disable-next-line: no-any
   [key: string]: any;
   isAboutVisible: boolean;
-  countdownTime: number;
-  isCountdownRunning: boolean;
   isDropdownVisible: boolean;
-  isEditing: boolean;
-  isSettingWarmupTime: boolean;
+  isTimerRunning: boolean;
+  timers: ITimerState[];
   toolbarMenuVisible: boolean;
-  warmupCounter: number;
-  warmupTime: number;
 }
 
 export default class App extends React.Component<IAppProps, IAppState> {
-  private countdownInput = initialState.countdownTime;
-  private timer?: number;
+  private intervalId: number | null;
   private sounds = {
     bell: require('../assets/sounds/signal_tone.mp3'),
     om: require('../assets/sounds/om_chant.mp3'),
@@ -52,12 +41,25 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   constructor(props: IAppProps) {
     super(props);
+    this.intervalId = null;
     this.state = {
       isAboutVisible: false,
-      isCountdownRunning: false,
       isDropdownVisible: false,
-      isEditing: false,
-      isSettingWarmupTime: false,
+      isTimerRunning: false,
+      timers: [
+        {
+          intervals: [10, 30, 60, 120, 300, 600],
+          timeCurrent: 60,
+          timeTotal: 60,
+          timerType: TimerType.slider,
+        },
+        {
+          isEditing: false,
+          timeCurrent: 900,
+          timeTotal: 900,
+          timerType: TimerType.digit,
+        },
+      ],
       toolbarMenuVisible: false,
       ...initialState,
     };
@@ -70,16 +72,11 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
   public componentWillUnmount() {
     this.pauseCountdown();
+    this.persistState();
   }
 
   public render() {
-    let displayTime = 0;
-    if (this.isWarmupRunning()) {
-      displayTime = this.state.warmupCounter;
-    } else {
-      displayTime = this.state.countdownTime;
-    }
-    if (this.isCountdownInProgress() || this.isWarmupRunning()) {
+    if (this.state.isTimerRunning) {
       KeepAwake.activate();
     } else {
       KeepAwake.deactivate();
@@ -104,79 +101,66 @@ export default class App extends React.Component<IAppProps, IAppState> {
             </TouchableOpacity>
           </View>
           <View style={styles.timerContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                if (this.state.isCountdownRunning) return;
-                !this.state.isEditing
-                  ? this.setState({ isEditing: true })
-                  : this.endTimerEdit();
-              }}
-            >
-              <Timer
-                changeHandler={this.setCountdownInput}
-                endEditingHandler={this.endTimerEdit}
-                digitSpace={95}
-                displayTime={displayTime}
-                isEditMode={this.state.isEditing}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.sliderContainer}>
-            <Text style={styles.sliderContainerTitle}>Warmup Time</Text>
-            <TimeSlider
-              disabled={this.isCountdownInProgress() || this.isWarmupRunning()}
-              intervals={warmupIntervals}
-              onSlidingComplete={() => {
-                new Promise((resolve, _) => {
-                  this.setState({
-                    isSettingWarmupTime: false,
-                    warmupTime: this.state.warmupCounter,
-                  });
-                  resolve();
-                }).then(this.persistState.bind(this));
-              }}
-              onValueChange={(value: number) =>
-                this.setState({
-                  isSettingWarmupTime: true,
-                  warmupCounter: value,
-                })
-              }
-              value={
-                (this.state.isSettingWarmupTime && this.state.warmupCounter) ||
-                this.state.warmupTime
+            <FlatList
+              data={this.state.timers}
+              keyExtractor={(_, index) => `${index}`}
+              renderItem={(li) =>
+                li.item.timerType === TimerType.digit ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      const timers = [...this.state.timers];
+                      timers[li.index].isEditing = true;
+                      this.setState({ timers });
+                    }}
+                    disabled={this.state.isTimerRunning}
+                  >
+                    <Timer
+                      displayTime={li.item.timeCurrent}
+                      isEditMode={li.item.isEditing}
+                      changeHandler={(newTime) => {
+                        this.onTimerValueChange(li.index, newTime);
+                      }}
+                      endEditingHandler={() => {
+                        this.onTimerValueChangeComplete(li.index);
+                      }}
+                      title={'Meditation Time'}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TimeSlider
+                    intervals={li.item.intervals || [0]}
+                    value={li.item.timeCurrent}
+                    onValueChange={(newTime) => {
+                      const timers = this.onTimerValueChange(li.index, newTime);
+                      this.setState({ timers });
+                    }}
+                    onSlidingComplete={() => {
+                      this.onTimerValueChangeComplete(li.index);
+                    }}
+                    disabled={this.state.isTimerRunning}
+                    title={'Warmup Time'}
+                  />
+                )
               }
             />
           </View>
-
           <View style={styles.buttonContainer}>
-            {this.timer ? (
+            {this.state.isTimerRunning ? (
               <LifeButton
-                background={
-                  this.isWarmupRunning()
-                    ? { backgroundColor: '#F6CEF5' }
-                    : { backgroundColor: '#AC58FA' }
-                }
+                background={{ backgroundColor: '#FFFFFF' }}
                 size={200}
                 textSize={50}
-                title={''} // Pause
+                title={'Pause'}
                 onPress={this.pauseCountdown}
-              />
-            ) : this.isCountdownInProgress() || this.isWarmupRunning() ? (
-              <LifeButton
-                background={{ backgroundColor: '#31B404' }}
-                size={200}
-                textSize={50}
-                title={''} // Resume
-                onPress={this.startWarmup}
               />
             ) : (
               <LifeButton
                 background={{ backgroundColor: '#FFFFFF' }}
                 size={200}
                 textSize={50}
-                title={''} // Start
-                onPress={this.startWarmup}
+                title={'Start'}
+                disabled={this.state.isTimerRunning}
+                onPress={() => this.startCountdown()}
               />
             )}
           </View>
@@ -215,87 +199,72 @@ export default class App extends React.Component<IAppProps, IAppState> {
     );
   }
 
-  public pauseCountdown = () => {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = undefined;
-      this.setState({ isCountdownRunning: false });
+  public startCountdown = () => {
+    if (this.nextTimer()) {
+      this.intervalId = setInterval(() => {
+        const timers = [...this.state.timers];
+        const targetTimer = this.nextTimer();
+        targetTimer.timeCurrent -= 1;
+        this.setState({
+          timers,
+          isTimerRunning: true,
+        });
+        if (targetTimer.timeCurrent <= 0) {
+          this.pauseCountdown();
+          this.countdownFinishedHandler();
+          if (this.nextTimer()) {
+            this.startCountdown();
+          } else {
+            this.resetCountdown();
+          }
+        }
+      },                            1000);
     }
+  }
+
+  public pauseCountdown = () => {
+    if (this.state.isTimerRunning && this.intervalId != null) {
+      clearInterval(this.intervalId);
+    }
+    this.setState({
+      isTimerRunning: false,
+    });
   }
 
   public resetCountdown = () => {
     this.pauseCountdown();
-    this.countdownInput = initialState.countdownTime;
-    new Promise((resolve, _) => {
-      this.setState({ ...initialState });
-      resolve();
-    }).then(this.persistState.bind(this));
-  }
-
-  public startWarmup = () => {
-    if (this.state.countdownTime <= 0 || this.timer) return;
-    if (this.state.warmupCounter <= 0) {
-      if (this.timer) clearInterval(this.timer);
-      this.startCountdown();
-      return;
-    }
-
-    this.timer = setInterval(() => {
-      if (this.state.warmupCounter <= 0) {
-        this.pauseCountdown();
-        this.warmupFinishedHandler();
-        this.startCountdown();
-        return;
+    const timers = [...this.state.timers];
+    for (const i in timers) {
+      if (timers[i]) {
+        timers[i].timeCurrent = timers[i].timeTotal;
       }
-      this.setState({
-        isCountdownRunning: true,
-        warmupCounter: this.state.warmupCounter - 1,
-      });
-    },                       1000);
-  }
-
-  public startCountdown = () => {
-    if (this.state.countdownTime <= 0 || this.timer) return;
-
-    this.timer = setInterval(() => {
-      if (this.state.countdownTime <= 0) {
-        this.pauseCountdown();
-        this.countdownFinishedHandler();
-        this.setState({
-          countdownTime: this.countdownInput,
-          warmupCounter: this.state.warmupTime,
-        });
-        return;
-      }
-      this.setState({
-        countdownTime: this.state.countdownTime - 1,
-        isCountdownRunning: true,
-      });
-    },                       1000);
-  }
-
-  public setCountdownInput = (time: number) => {
-    this.countdownInput = time;
-  }
-
-  public endTimerEdit = () => {
-    new Promise((resolve, _) => {
-      this.setState({ countdownTime: this.countdownInput, isEditing: false });
-      resolve();
-    }).then(this.persistState.bind(this));
-  }
-
-  private filterState(state: IAppProps): IAppState {
-    const filteredState = Object.entries(state).filter(
-      (entry: [string, string]) =>
-        persistentState.includes(entry[0]) ? entry : null,
-    );
-    // use Object.fromEntries when possible
-    const newState = {} as IAppState;
-    for (const [key, value] of filteredState) {
-      newState[key] = value;
     }
-    return newState;
+    this.setState({
+      timers,
+    });
+  }
+
+  private onTimerValueChange = (timerIndex: number, newVal: number) => {
+    const timers = [...this.state.timers];
+    timers[timerIndex].timeCurrent = newVal;
+    timers[timerIndex].timeTotal = newVal;
+    return timers;
+  }
+
+  private onTimerValueChangeComplete = (timerIndex: number) => {
+    const timers = [...this.state.timers];
+    timers[timerIndex].isEditing = false;
+    this.setState({ timers });
+  }
+
+  private nextTimer = () => {
+    return this.state.timers.filter(
+      (timer) => timer.timeCurrent > 0 && timer.timeCurrent <= timer.timeTotal,
+    )[0];
+  }
+
+  private filterState(state: IAppState): IAppState {
+    return state;
   }
 
   private async persistState() {
@@ -313,29 +282,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
       if (state) {
         const myState = { ...JSON.parse(state) } as IAppState;
         const newState = this.filterState(myState);
-        this.countdownInput = newState.countdownTime;
-        this.setState({ ...newState, warmupCounter: newState.warmupTime });
+        this.setState({ ...newState });
       }
     });
   }
 
-  private isWarmupRunning = () => {
-    return Boolean(
-      this.state.warmupCounter > 0 &&
-        this.state.warmupCounter < this.state.warmupTime &&
-        !this.state.isSettingWarmupTime,
-    );
-  }
-
-  private isCountdownInProgress = () => {
-    return this.state.countdownTime < this.countdownInput;
-  }
-
   private countdownFinishedHandler = () => {
-    this.playSound(this.sounds.bell);
-  }
-
-  private warmupFinishedHandler = () => {
     this.playSound(this.sounds.bell);
   }
 
@@ -359,8 +311,6 @@ interface IAppStyle {
   buttonContainer: ViewStyle;
   footerContainer: ViewStyle;
   mainContainer: TextStyle;
-  sliderContainer: ViewStyle;
-  sliderContainerTitle: TextStyle;
   timerContainer: ViewStyle;
 }
 
@@ -402,27 +352,12 @@ const styles = StyleSheet.create<IAppStyle>({
     height: '100%',
     width: '100%',
   },
-  sliderContainer: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#000000',
-    borderRadius: 30,
-    borderWidth: 1,
-    justifyContent: 'center',
-    marginTop: 50,
-    opacity: 0.8,
-  },
-  sliderContainerTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 10,
-  },
   timerContainer: {
     backgroundColor: '#FFFFFF',
     borderColor: '#000000',
     borderRadius: 40,
     borderWidth: 1,
-    marginTop: 70,
+    marginTop: 10,
     opacity: 0.8,
     width: 280,
   },
