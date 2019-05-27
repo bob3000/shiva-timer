@@ -4,99 +4,121 @@ exports[`TimeSlider snapshot test 1`] = `
 <View
   style={
     Object {
-      "flexDirection": "row",
-      "padding": 15,
+      "alignItems": "center",
     }
   }
 >
-  <RCTSlider
-    disabled={false}
-    enabled={true}
-    maximumTrackTintColor="#000000"
-    maximumValue={2}
-    minimumTrackTintColor="#000000"
-    minimumValue={0}
-    onChange={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    onValueChange={[Function]}
-    step={0}
+  <Text
     style={
-      Array [
-        Object {
-          "height": 40,
-        },
-        Object {
-          "width": 200,
-        },
-      ]
+      Object {
+        "fontSize": 18,
+      }
     }
-    thumbTintColor="#000000"
-    value={2}
   />
   <View
     style={
       Object {
-        "alignItems": "center",
-        "backgroundColor": undefined,
+        "flexDirection": "row",
+        "padding": 15,
       }
     }
   >
+    <RCTSlider
+      disabled={false}
+      enabled={true}
+      maximumTrackTintColor="#000000"
+      maximumValue={2}
+      minimumTrackTintColor="#000000"
+      minimumValue={0}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onValueChange={[Function]}
+      step={0}
+      style={
+        Array [
+          Object {
+            "height": 40,
+          },
+          Object {
+            "width": 200,
+          },
+        ]
+      }
+      thumbTintColor="#000000"
+      value={2}
+    />
     <View
       style={
         Object {
-          "flexDirection": "row",
+          "alignItems": "center",
+          "backgroundColor": undefined,
         }
       }
     >
       <Text
         style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "bold",
-            },
-            Object {
-              "width": 25,
-            },
-            Object {
-              "textAlign": "right",
-            },
-          ]
+          Object {
+            "fontSize": 18,
+          }
         }
-      >
-        00
-      </Text>
-      <Text
+      />
+      <View
         style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "bold",
-            },
-          ]
+          Object {
+            "flexDirection": "row",
+          }
         }
       >
-        :
-      </Text>
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontSize": 18,
-              "fontWeight": "bold",
-            },
-            Object {
-              "width": 25,
-            },
-          ]
-        }
-      >
-        04
-      </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#000000",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "width": 25,
+              },
+              Object {
+                "textAlign": "right",
+              },
+            ]
+          }
+        >
+          00
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#000000",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          :
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#000000",
+                "fontSize": 18,
+                "fontWeight": "bold",
+              },
+              Object {
+                "width": 25,
+              },
+            ]
+          }
+        >
+          04
+        </Text>
+      </View>
     </View>
   </View>
 </View>

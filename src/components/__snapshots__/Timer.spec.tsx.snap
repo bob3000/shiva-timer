@@ -9,6 +9,13 @@ exports[`Timer snapshot test 1`] = `
     }
   }
 >
+  <Text
+    style={
+      Object {
+        "fontSize": 18,
+      }
+    }
+  />
   <View
     style={
       Object {

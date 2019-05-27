@@ -46,7 +46,7 @@ export const LifeButton: React.FunctionComponent<ILifeButtonProps> = (
     titleText: {
       color: '#000000',
       fontSize: props.textSize,
-      fontWeight: 'bold',
+      fontWeight: '300',
     },
     titleTextContainer: {
       borderRadius: 40,
