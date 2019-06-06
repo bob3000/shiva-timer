@@ -11,12 +11,12 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import AboutAlert from './AboutAlert';
-import { DropdownMenu } from './DropDownMenu';
-import FadeInView from './FadeInView';
-import LifeButton from './LifeButton';
-import Timer, { ITimerState, TimerType } from './Timer';
-import TimeSlider from './TimeSlider';
+import AboutAlert from '../components/AboutAlert';
+import { DropdownMenu } from '../components/DropDownMenu';
+import FadeInView from '../components/FadeInView';
+import LifeButton from '../components/LifeButton';
+import Timer, { ITimerState, TimerType } from '../components/Timer';
+import TimeSlider from '../components/TimeSlider';
 
 export interface IStandardTimerScreenProps {}
 
@@ -87,7 +87,7 @@ export default class StandardTimerScreen extends React.Component<
         style={styles.backgroundImage}
         source={require('../../assets/backgrounds/lord_shiva.jpg')}
       >
-        <View style={styles.mainContainer}>
+        <FadeInView style={styles.mainContainer}>
           <View style={styles.aboutLink}>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -104,7 +104,7 @@ export default class StandardTimerScreen extends React.Component<
             <FlatList
               data={this.state.timers}
               keyExtractor={(_, index) => `${index}`}
-              renderItem={(li) =>
+              renderItem={li =>
                 li.item.timerType === TimerType.digit ? (
                   <TouchableOpacity
                     onPress={() => {
@@ -117,7 +117,7 @@ export default class StandardTimerScreen extends React.Component<
                     <Timer
                       displayTime={li.item.timeCurrent}
                       isEditMode={li.item.isEditing}
-                      changeHandler={(newTime) => {
+                      changeHandler={newTime => {
                         this.onTimerValueChange(li.index, newTime);
                       }}
                       endEditingHandler={() => {
@@ -130,7 +130,7 @@ export default class StandardTimerScreen extends React.Component<
                   <TimeSlider
                     intervals={li.item.intervals || [0]}
                     value={li.item.timeCurrent}
-                    onValueChange={(newTime) => {
+                    onValueChange={newTime => {
                       const timers = this.onTimerValueChange(li.index, newTime);
                       this.setState({ timers });
                     }}
@@ -147,7 +147,7 @@ export default class StandardTimerScreen extends React.Component<
           <View style={styles.buttonContainer}>
             {this.state.isTimerRunning ? (
               <LifeButton
-                background={{ backgroundColor: '#FFFFFF' }}
+                background={{ backgroundColor: '#89A51A' }}
                 size={200}
                 textSize={50}
                 title={'Pause'}
@@ -160,7 +160,7 @@ export default class StandardTimerScreen extends React.Component<
                 textSize={50}
                 title={'Start'}
                 disabled={this.state.isTimerRunning}
-                onPress={() => this.startCountdown()}
+                onPress={throttleButton(this.startCountdown)}
               />
             )}
           </View>
@@ -184,17 +184,13 @@ export default class StandardTimerScreen extends React.Component<
                   }),
                 title: 'about',
               },
-              {
-                onPress: () => null,
-                title: 'settings',
-              },
             ]}
           />
           <AboutAlert
             visible={this.state.isAboutVisible}
             okHandler={() => this.setState({ isAboutVisible: false })}
           />
-        </View>
+        </FadeInView>
       </ImageBackground>
     );
   }
@@ -259,7 +255,7 @@ export default class StandardTimerScreen extends React.Component<
 
   private nextTimer = () => {
     return this.state.timers.filter(
-      (timer) => timer.timeCurrent > 0 && timer.timeCurrent <= timer.timeTotal,
+      timer => timer.timeCurrent > 0 && timer.timeCurrent <= timer.timeTotal,
     )[0];
   }
 
@@ -280,7 +276,7 @@ export default class StandardTimerScreen extends React.Component<
   }
 
   private loadState() {
-    AsyncStorage.getItem('state').then((state) => {
+    AsyncStorage.getItem('state').then(state => {
       if (state) {
         const myState = { ...JSON.parse(state) } as IStandardTimerScreenState;
         const newState = this.filterState(myState);
@@ -305,6 +301,19 @@ export default class StandardTimerScreen extends React.Component<
     }
   }
 }
+
+const throttleButton = (f: () => void) => {
+  let hitCount = 0;
+  setTimeout(() => {
+    hitCount = 0;
+  },         250);
+  return () => {
+    if (hitCount <= 0) {
+      hitCount += 1;
+      f();
+    }
+  };
+};
 
 interface IStandardTimerScreenStyle {
   aboutLink: TextStyle;

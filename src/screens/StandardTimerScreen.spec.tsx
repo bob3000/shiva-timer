@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import App from './App';
+import StandardTimerScreen from './StandardTimerScreen';
 
 jest.useFakeTimers();
 
-describe('App', () => {
+describe('StandardTimerScreen', () => {
   it('snapshot test', () => {
-    const tree = renderer.create(<App />).toJSON();
+    const tree = renderer.create(<StandardTimerScreen />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

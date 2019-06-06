@@ -1,5 +1,5 @@
 import * as React from 'react';
-import StandardTimerScreen from './components/StandardTimerScreen';
+import StandardTimerScreen from './screens/StandardTimerScreen';
 
 export interface IAppProps {}
 
