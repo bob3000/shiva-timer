@@ -6,6 +6,7 @@
     "no-empty-interface": false,
     "object-literal-sort-keys": [true, "shorthand-first"],
     "prefer-array-literal": [true, { "allow-type-parameters": true }],
+    "ter-arrow-parens": false,
     "variable-name": [
       true,
       "ban-keywords",
