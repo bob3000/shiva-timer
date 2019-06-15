@@ -6,7 +6,6 @@
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
-    "permissions": [],
     "orientation": "portrait",
     "icon": "./assets/images/shiva_icon.png",
     "splash": {
@@ -22,7 +21,8 @@
       "supportsTablet": false
     },
     "android": {
-      "package": "net.bob3000.shiva_timer"
+      "package": "net.bob3000.shiva_timer",
+      "permissions": []
     }
   }
 }
